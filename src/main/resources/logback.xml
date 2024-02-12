@@ -1,0 +1,49 @@
+<configuration>
+    <!-- Console Appender -->
+    <appender name="ConsoleAppenderTrading" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Warn Messages Appender -->
+    <appender name="WarnFileAppenderTrading" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/warns.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/warn.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- All Messages Appender -->
+    <appender name="AllFileAppenderTrading" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/allLogs.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/all.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>20MB</maxFileSize>
+            <maxHistory>7</maxHistory> <!-- Number of archived files -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Loggers -->
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="com.example.Trading" level="DEBUG"/>
+
+    <!-- Root Logger -->
+    <root level="INFO">
+        <appender-ref ref="ConsoleAppenderTrading"/>
+        <appender-ref ref="WarnFileAppenderTrading"/>
+        <appender-ref ref="AllFileAppenderTrading"/>
+    </root>
+
+</configuration>
